@@ -2,17 +2,17 @@
 from django import forms
 from source.tests import models
 
-class CaseAddForm(forms.ModelForm):
+class TestCaseForm(forms.ModelForm):
 
     class Meta:
-        model = models.Test_Case
+        model = models.TestCase
         exclude = ('QA_ID', 'status')
 
 
 class SuitAddForm(forms.ModelForm):
 
     class Meta:
-        model = models.Test_Suit
+        model = models.TestSuit
         exclude = ('QA_ID', 'status')
 
 

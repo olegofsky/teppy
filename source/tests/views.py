@@ -5,56 +5,65 @@ from django.template.context import RequestContext
 from django.shortcuts import render_to_response
 from django.contrib.auth.models import User
 
+from django.views.generic import ListView, DetailView
+
 from source.tests.classes import GTValues
-from source.tests.models import Test_Case, Test_Suit, Bug, GlobalTesting, TestCaseInGT
-from source.tests.forms import CaseAddForm, SuitAddForm, BugAddForm, GlobalTestingAddForm
+from source.tests.models import TestCase, TestSuit, Bug, GlobalTesting, TestCaseInGT
+from source.tests.forms import TestCaseForm, SuitAddForm, BugAddForm, GlobalTestingAddForm
+
+
+class CaseList(ListView):
+    model = TestCase
+
+class CaseDetail(DetailView):
+    model = TestCase
 
 @login_required
 def case_list(request, template_name):
     context = RequestContext(request)
-    context['cases'] = Test_Case.objects.all()
+    context['cases'] = TestCase.objects.all()
     return render_to_response(template_name, context)
 
 @login_required
 def suit_list(request, template_name):
     context = RequestContext(request)
-    context['suits'] = Test_Suit.objects.all()
+    context['suits'] = TestSuit.objects.all()
     return render_to_response(template_name, context)
 
 @login_required
 def case_details(request, template_name, case_id):
     context = RequestContext(request)
-    context['case'] = Test_Case.objects.get(id=case_id)
+    context['case'] = TestCase.objects.get(id=case_id)
     return render_to_response(template_name, context)
 
 @login_required
 def suit_details(request, template_name, suit_id):
     context = RequestContext(request)
-    context['suit'] = Test_Suit.objects.get(id=suit_id)
+    context['suit'] = TestSuit.objects.get(id=suit_id)
     return render_to_response(template_name, context)
 
 @login_required
 def case_add(request, template_name):
     context = RequestContext(request)
     if request.method == 'POST':
-        data = CaseAddForm(request.POST)
+        data = TestCaseForm(request.POST)
         if data.is_valid():
             case = data.save(commit=False)
-            case.status = Test_Case.STATUS_ACTIVE
+            case.status = TestCase.STATUS_ACTIVE
             case.save()
             return HttpResponseRedirect(case.get_absolute_url())
         else:
-            context['form'] = CaseAddForm(request.POST)
+            context['form'] = TestCaseForm(request.POST)
             return render_to_response(template_name, context)
     else:
         form_kwargs = {
                         'author': request.user,
-                        'priority': Test_Case.PRIORITY_MID,
+                        'priority': TestCase.PRIORITY_MID,
                     }
         if 'based_on' in request.GET:
-            form_kwargs['suit'] = Test_Suit.objects.get(id=request.GET['based_on'])
+            form_kwargs['suit'] = TestSuit.objects.get(id=request.GET['based_on'])
 
-        context['form'] = CaseAddForm(initial=form_kwargs)
+        context['form'] = TestCaseForm(initial=form_kwargs)
         return render_to_response(template_name, context)
 
 @login_required
@@ -64,7 +73,7 @@ def suit_add(request, template_name):
         data = SuitAddForm(request.POST)
         if data.is_valid():
             suit = data.save(commit=False)
-            suit.status = Test_Suit.STATUS_ACTIVE
+            suit.status = TestSuit.STATUS_ACTIVE
             suit.save()
             return HttpResponseRedirect(suit.get_absolute_url())
         else:

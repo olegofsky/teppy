@@ -1,24 +1,24 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
-from source.tests.models import Test_Case, Test_Suit, TestCaseInGT, GlobalTesting, Bug
+from source.tests.models import TestCase, TestSuit, TestCaseInGT, GlobalTesting, Bug
 
-class Test_Case_Admin(admin.ModelAdmin):
+class TestCaseAdmin(admin.ModelAdmin):
     pass
 
-class Test_Suit_Admin(admin.ModelAdmin):
+class TestSuitAdmin(admin.ModelAdmin):
     pass
 
-class TestCaseInGT_Admin(admin.ModelAdmin):
+class TestCaseInGTAdmin(admin.ModelAdmin):
     pass
 
-class GlobalTesting_Admin(admin.ModelAdmin):
+class GlobalTestingAdmin(admin.ModelAdmin):
     pass
 
-class Bug_Admin(admin.ModelAdmin):
+class BugAdmin(admin.ModelAdmin):
     pass
 
-admin.site.register(Test_Case, Test_Case_Admin)
-admin.site.register(Test_Suit, Test_Suit_Admin)
-admin.site.register(TestCaseInGT, TestCaseInGT_Admin)
-admin.site.register(GlobalTesting, GlobalTesting_Admin)
-admin.site.register(Bug, Bug_Admin)
+admin.site.register(TestCase, TestCaseAdmin)
+admin.site.register(TestSuit, TestSuitAdmin)
+admin.site.register(TestCaseInGT, TestCaseInGTAdmin)
+admin.site.register(GlobalTesting, GlobalTestingAdmin)
+admin.site.register(Bug, BugAdmin)

@@ -7,9 +7,11 @@ urlpatterns = patterns('',
                         url(r'^suit/add/', views.suit_add, {'template_name': 'tests/suit_add.html'}),
                         url(r'^suit/(?P<suit_id>\d+)/$', views.suit_details, {'template_name': 'tests/suit_details.html'}),
 
-                        url(r'^case/$', views.case_list, {'template_name': 'tests/case_list.html'}),
+                        # url(r'^case/$', views.case_list, {'template_name': 'tests/case_list.html'}),
+                        url(r'^case/$', views.CaseList.as_view()),
                         url(r'^case/add/', views.case_add, {'template_name': 'tests/case_add.html'}),
-                        url(r'^case/(?P<case_id>\d+)/$', views.case_details, {'template_name': 'tests/case_details.html'}),
+                        #url(r'^case/(?P<case_id>\d+)/$', views.case_details, {'template_name': 'tests/case_details.html'}),
+                        url(r'^case/(?P<pk>\d+)/$', views.CaseDetail.as_view(), {'template_name': 'tests/case_details.html'}),
 
                         url(r'^bug/$', views.bug_list, {'template_name': 'tests/bug_list.html'}),
                         url(r'^bug/add/$', views.bug_add, {'template_name': 'tests/bug_add.html'}),

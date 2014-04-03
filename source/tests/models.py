@@ -15,7 +15,7 @@ STATUS_CHOICES = (
                   (2, 'not active'),
                   )
 
-class Test_Suit(models.Model):
+class TestSuit(models.Model):
     STATUS_ACTIVE = 'active'
     STATUS_NOT_ACTIVE = 'not active'
 
@@ -46,10 +46,10 @@ class Test_Suit(models.Model):
         return '/tests/suit/{0}/'.format(self.id)
 
     def get_cases(self):
-        return Test_Case.objects.filter(suit=self)
+        return TestCase.objects.filter(suit=self)
 
 
-class Test_Case(models.Model):
+class TestCase(models.Model):
     PRIORITY_LOW = 'low'
     PRIORITY_LOW_MID = 'low-mid'
     PRIORITY_MID = 'mid'
@@ -78,7 +78,7 @@ class Test_Case(models.Model):
     developer = models.ForeignKey(User)
     producer = models.ForeignKey(User, related_name='cases_spec_author')
 
-    suit = models.ForeignKey(Test_Suit, null=True, blank=True)
+    suit = models.ForeignKey(TestSuit, null=True, blank=True)
 
     priority = models.CharField(choices=PRIORITY_CHOICES, max_length=16)
 
@@ -111,7 +111,7 @@ class Bug(models.Model):
 
     author = models.ForeignKey(User, related_name='bug_commiter')
     traceback = models.TextField(null=True, blank=True)
-    test_case = models.ForeignKey(Test_Case)
+    test_case = models.ForeignKey(TestCase)
 
     date_opened = models.DateTimeField(auto_now_add=True)
     date_closed = models.DateTimeField(null=True, blank=True)
@@ -140,7 +140,7 @@ class TestCaseInGT(models.Model):
             (STATUS_QUEUED, u'queued'),
     )
 
-    test_case = models.ForeignKey(Test_Case)
+    test_case = models.ForeignKey(TestCase)
     tester = models.ForeignKey(User, null=True, blank=True)
     gt = models.ForeignKey('GlobalTesting')
     status = models.CharField(choices=TC_STATUS_CHOICES, max_length=16, default='queued')
@@ -159,7 +159,7 @@ class GlobalTesting(models.Model):
 
     testers = models.ManyToManyField(User, related_name='members')
 
-    test_cases = models.ManyToManyField(Test_Case, through=TestCaseInGT)
+    test_cases = models.ManyToManyField(TestCase, through=TestCaseInGT)
 
     date_start = models.DateTimeField(null=True, blank=True)
     date_finish = models.DateTimeField(null=True, blank=True)
