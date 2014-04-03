@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block navi %}
+	{% include "tests/suit_navigation.html" %}
+{% endblock %}
+
+{% block content %}
+
+	<form method="POST" action="/tests/suit/add/" enctype="multipart/form-data">{% csrf_token %}
+		<table>
+			<tr>
+				<td>Author</td>
+				<td>{{ form.author }}</td>
+				<td>{{ form.author.errors }}</td>
+			</tr>
+			<tr>
+				<td>Producer</td>
+				<td>{{ form.producer }}</td>
+				<td>{{ form.producer.errors }}</td>
+			</tr>
+			<tr>
+				<td>Overview</td>
+				<td>{{ form.overview }}</td>
+				<td>{{ form.procedure.errors }}</td>
+			</tr>
+			<tr>
+				<td>Global setup</td>
+				<td>{{ form.global_setup }}</td>
+				<td>{{ form.global_setup.errors }}</td>
+			</tr>
+			<tr>
+				<td>Spec</td>
+				<td>{{ form.spec }}</td>
+				<td>{{ form.spec.errors }}</td>
+			</tr>
+		</table>
+		<input type="submit">
+	</form>
+{% endblock %}

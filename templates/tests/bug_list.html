@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block navi %}
+	{% include "tests/bug_navigation.html" %}
+{% endblock %}
+
+{% block content %}
+	{% for bug in bugs %}
+		<a href="{{ bug.get_absolute_url }}">{{ bug }}</a> <br>
+	{% endfor %}
+{% endblock %}

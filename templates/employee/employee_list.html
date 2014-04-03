@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block navi %}
+	{% include "employee/employee_navigation.html" %}
+{% endblock %}
+
+{% block content %}
+	{% for employee in employees %}
+		<a href="/employee/employee/{{ employee.id }}/">{{ employee }}</a> <br>
+	{% endfor %}
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block navi %}
+	{% include "tests/gt_navigation.html" %}
+{% endblock %}
+
+{% block content %}
+	<table>
+		<tr>
+			<td>ID</td>
+			<td>from</td>
+			<td>until</td>
+		<tr>
+		{% for gt in gts %}
+			<tr>
+				<td><a href="{{ gt.get_absolute_url }}"><font size="4">{{ gt }}</font></a></td>
+				<td>{{ gt.date_start }}</td>
+				<td>{{ gt.date_finish }}</td>
+			<tr>
+		{% endfor %}
+	</table>
+{% endblock %}

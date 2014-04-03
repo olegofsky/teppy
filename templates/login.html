@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>	
+	<head>
+		<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}main.css" type="text/css" />
+	</head>
+	<body>
+		<div id="Logo" class="authLogo">
+			
+		</div>
+		<div id="auth" class="auth">
+		
+		{% if user.is_authenticated %}
+		<div id="ifLoged" class="authConent">
+			Вы же уже авторизорваны как {{ user.username }}.
+			Впрочем, всегда можно <a href="/accounts/logout/">выйти</a>.<br/><br/>
+		</div>
+		{% else %}				
+			{% if form.errors %}
+				<div id="ifError" class="authConent">
+					Проверьте правильность ввода Логина и Пароля
+				</div>
+			{% endif %}		
+			<form method="post" action="{% url django.contrib.auth.views.login %}">
+				{% csrf_token %}
+				Пользователь :
+				{{ form.username }}
+				<br/>
+				Пароль :
+				{{ form.password }}
+				<br/>
+				<div id="login" class="loginInp">
+					{% if next %}
+		                <input type="hidden" name="next" value="{{ next }}" />
+		            {% else %}
+		                <input type="hidden" name="next" value="/index/" />
+		            {% endif %}						
+					<input type="submit" value="Вход в систему" />
+				<div>				
+			</form>
+		{% endif %}
+		</div>
+	</body>
+</html>

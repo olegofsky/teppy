@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block navi %}
+	{% include "tests/case_navigation.html" %}
+{% endblock %}
+
+{% block content %}
+
+	<form method="POST" action="/tests/case/add/" enctype="multipart/form-data">{% csrf_token %}
+		<table>
+			<tr>
+				<td>Author</td>
+				<td>{{ form.author }}</td>
+				<td>{{ form.author.errors }}</td>
+			</tr>
+			<tr>
+				<td>Developer</td>
+				<td>{{ form.developer }}</td>
+				<td>{{ form.developer.errors }}</td>
+			</tr>
+			<tr>
+				<td>Producer</td>
+				<td>{{ form.producer }}</td>
+				<td>{{ form.producer.errors }}</td>
+			</tr>
+			<tr>
+				<td>To suit</td>
+				<td>{{ form.suit }}</td>
+				<td>{{ form.suit.errors }}</td>
+			</tr>
+			<tr>
+				<td>Priority</td>
+				<td>{{ form.priority }}</td>
+				<td>{{ form.priority.errors }}</td>
+			</tr>
+			<tr>
+				<td>Idea</td>
+				<td>{{ form.idea }}</td>
+				<td>{{ form.idea.errors }}</td>
+			</tr>
+			<tr>
+				<td>Procedure</td>
+				<td>{{ form.procedure }}</td>
+				<td>{{ form.procedure.errors }}</td>
+			</tr>
+			<tr>
+				<td>Setup</td>
+				<td>{{ form.setup }}</td>
+				<td>{{ form.setup.errors }}</td>
+			</tr>
+			<tr>
+				<td>Expected result</td>
+				<td>{{ form.expected_result }}</td>
+				<td>{{ form.expected_result.errors }}</td>
+			</tr>
+		</table>
+		<input type="submit">
+	</form>
+{% endblock %}

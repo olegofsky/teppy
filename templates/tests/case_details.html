@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block navi %}
+	{% include "tests/case_navigation.html" %}
+{% endblock %}
+
+{% block content %}
+	<table>
+		<tr>
+			<td>author</td>
+			<td>{{ case.author }}</td>
+		</tr>
+		
+		<tr>
+			<td>developer</td>
+			<td>{{ case.developer }}</td>
+		</tr>
+		
+		<tr>
+			<td>producer</td>
+			<td>{{ case.producer }}</td>
+		</tr>
+		
+		<tr>
+			<td>suit</td>
+			<td>{{ case.suit }}</td>
+		</tr>
+		
+		<tr>
+			<td>priority</td>
+			<td>{{ case.priority }}</td>
+		</tr>
+		
+		<tr>
+			<td>setup</td>
+			<td>{{ case.setup }}</td>
+		</tr>
+		
+		<tr>
+			<td>idea</td>
+			<td>{{ case.idea }}</td>
+		</tr>
+		
+		<tr>
+			<td>procedure</td>
+			<td>{{ case.procedure }}</td>
+		</tr>
+		
+		<tr>
+			<td>expected_result</td>
+			<td>{{ case.expected_result }}</td>
+		</tr>
+		
+		<tr>
+			<td>status</td>
+			<td>{{ case.status }}</td>
+		</tr>
+		
+		<tr>
+			<td>date_created</td>
+			<td>{{ case.date_created }}</td>
+		</tr>
+		
+		<tr>
+			<td>date_modified</td>
+			<td>{{ case.date_modified }}</td>
+		</tr>
+	</table>
+
+	{% if case.get_bugs %}
+		<font size="2">With bugs:</font> 
+		{% for bug in case.get_bugs %}
+			<font size="2"><a href="{{ bug.get_absolute_url }}">{{ bug }}</a>; </font>
+		{% endfor %}
+	{% else %}
+		<font size="2">nothing added</font>
+	{% endif %}
+	<br><br>
+	<font size="2"><a href="/tests/bug/add/?based_on={{ case.id }}">Open bug</a></font>
+
+{% endblock %}

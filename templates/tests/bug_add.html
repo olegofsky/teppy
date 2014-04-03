@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block navi %}
+	{% include "tests/bug_navigation.html" %}
+{% endblock %}
+
+{% block content %}
+
+	<form method="POST" enctype="multipart/form-data">{% csrf_token %}
+		<table>
+			<tr>
+				<td>Author</td>
+				<td>{{ form.author }}</td>
+				<td>{{ form.author.errors }}</td>
+			</tr>
+			<tr>
+				<td>Traceback</td>
+				<td>{{ form.traceback }}</td>
+				<td>{{ form.traceback.errors }}</td>
+			</tr>
+			<tr>
+				<td>Test case</td>
+				<td>{{ form.test_case }}</td>
+				<td>{{ form.test_case.errors }}</td>
+			</tr>
+			<tr>
+				<td>Global testing</td>
+				<td>{{ form.gt }}</td>
+				<td>{{ form.gt.errors }}</td>
+			</tr>
+		</table>
+		<input type="submit">
+	</form>
+{% endblock %}
