@@ -7,33 +7,27 @@
 {% block content %}
 
 	<form method="POST" action="/tests/gt/add/" enctype="multipart/form-data">{% csrf_token %}
-		<table>
-			<tr>
-				<td>Author</td>
-				<td>{{ form.author }}</td>
-				<td>{{ form.author.errors }}</td>
-			</tr>
-			<tr>
-				<td>testers</td>
-				<td>{{ form.testers }}</td>
-				<td>{{ form.testers.errors }}</td>
-			</tr>
-			<tr>
-				<td>cases</td>
-				<td>{{ form.test_cases }}</td>
-				<td>{{ form.test_cases.errors }}</td>
-			</tr>
-			<tr>
-				<td>date_start</td>
-				<td>{{ form.date_start }}</td>
-				<td>{{ form.date_start.errors }}</td>
-			</tr>
-			<tr>
-				<td>date_finish</td>
-				<td>{{ form.date_finish }}</td>
-				<td>{{ form.date_finish.errors }}</td>
-			</tr>
-		</table>
-		<input type="submit">
+			
+		<label>{{ form.author.label }}</label>
+		{{ form.author }}
+		{{ form.author.errors }}
+	
+		<label>{{ form.testers.label }}</label>
+		{{ form.testers }}
+		{{ form.testers.errors }}
+	
+		<label>{{ form.cases.label }}</label>
+		{{ form.test_cases }}
+		{{ form.test_cases.errors }}
+	
+		<label>{{ form.date_start.label }}</label>
+		{{ form.date_start }}
+		{{ form.date_start.errors }}
+	
+		<label>{{ form.date_finish.label }}</label>
+		{{ form.date_finish }}
+		{{ form.date_finish.errors }}
+			
+		<button type="submit" class="btn"> Submit </button>
 	</form>
 {% endblock %}

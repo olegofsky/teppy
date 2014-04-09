@@ -5,7 +5,9 @@
 {% endblock %}
 
 {% block content %}
+	<div class="container">
 	{% for employee in object_list %}
 		<a href="/employee/employee/{{ employee.id }}/">{{ employee }}</a> <br>
 	{% endfor %}
+	</div>
 {% endblock %}

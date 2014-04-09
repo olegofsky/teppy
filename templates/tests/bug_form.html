@@ -7,28 +7,22 @@
 {% block content %}
 
 	<form method="POST" enctype="multipart/form-data">{% csrf_token %}
-		<table>
-			<tr>
-				<td>Author</td>
-				<td>{{ form.author }}</td>
-				<td>{{ form.author.errors }}</td>
-			</tr>
-			<tr>
-				<td>Traceback</td>
-				<td>{{ form.traceback }}</td>
-				<td>{{ form.traceback.errors }}</td>
-			</tr>
-			<tr>
-				<td>Test case</td>
-				<td>{{ form.test_case }}</td>
-				<td>{{ form.test_case.errors }}</td>
-			</tr>
-			<tr>
-				<td>Global testing</td>
-				<td>{{ form.gt }}</td>
-				<td>{{ form.gt.errors }}</td>
-			</tr>
-		</table>
-		<input type="submit">
+		<label>{{form.author.label}}</label>
+		{{ form.author }}
+		{{ form.author.errors }}
+
+		<label>{{form.traceback.label}}</label>
+		{{ form.traceback }}
+		{{ form.traceback.errors }}
+
+		<label>{{form.test_case.label}} case</label>
+		{{ form.test_case }}
+		{{ form.test_case.errors }}
+
+		<label>{{form.gt.label}} testing</label>
+		{{ form.gt }}
+		{{ form.gt.errors }}
+
+		<button type="submit" class="btn"> Submit </button>
 	</form>
 {% endblock %}

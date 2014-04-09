@@ -7,7 +7,7 @@ from source.employee.views import employee_list
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^$', employee_list, {'template_name': 'employee/employee_list.html'}),
+    url(r'^$', employee_list, {'template_name': 'auth/user_list.html'}),
     url(r'employee/', include('source.employee.urls')),
 
     url(r'^tests/', include('source.tests.urls')),
