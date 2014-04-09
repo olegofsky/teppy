@@ -1,5 +1,3 @@
-import os
-
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -11,12 +9,12 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': '{0}/db'.format(os.path.dirname(os.path.abspath(__file__))),
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',
-        'PORT': '',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'teppy',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
@@ -59,6 +57,8 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
+    'south',
+
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',

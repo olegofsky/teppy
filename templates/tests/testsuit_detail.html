@@ -8,43 +8,43 @@
 	<table>
 		<tr>
 			<td>ID</td>
-			<td>{{ suit.id }}</td>
+			<td>{{ testsuit.id }}</td>
 		</tr>
 		<tr>
 			<td>Author</td>
-			<td>{{ suit.author }}</td>
+			<td>{{ testsuit.author }}</td>
 		</tr>
 		<tr>
 			<td>Producer</td>
-			<td>{{ suit.producer }}</td>
+			<td>{{ testsuit.producer }}</td>
 		</tr>
 		<tr>
 			<td>Overview</td>
-			<td>{{ suit.overview }}</td>
+			<td>{{ testsuit.overview }}</td>
 		</tr>
 		<tr>
 			<td>Global setup</td>
-			<td>{{ suit.global_setup }}</td>
+			<td>{{ testsuit.global_setup }}</td>
 		</tr>
 		<tr>
 			<td>Spec</td>
-			<td>{{ suit.spec }}</td>
+			<td>{{ testsuit.spec }}</td>
 		</tr>
 		<tr>
 			<td>Status</td>
-			<td>{{ suit.status }}</td>
+			<td>{{ testsuit.status }}</td>
 		</tr>
 	</table>
 	
 	<br>
-	{% if suit.get_cases %}
+	{% if testsuit.get_cases %}
 		<font size="2">With cases:</font> 
-		{% for case in suit.get_cases %}
+		{% for case in testsuit.get_cases %}
 			<font size="2"><a href="{{ case.get_absolute_url }}">{{ case }}</a>; </font>
 		{% endfor %}
 	{% else %}
 		<font size="2">nothing added</font>
 	{% endif %}
 	<br><br>
-	<font size="2"><a href="/tests/case/add/?based_on={{ suit.id }}">Attach case</a></font>
+	<font size="2"><a href="/tests/case/add/?based_on={{ testsuit.id }}">Attach case</a></font>
 {% endblock %}

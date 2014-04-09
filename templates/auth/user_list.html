@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
 {% block navi %}
-	{% include "employee/employee_navigation.html" %}
+	{% include "auth/employee_navigation.html" %}
 {% endblock %}
 
 {% block content %}
-	{% for employee in employees %}
+	{% for employee in object_list %}
 		<a href="/employee/employee/{{ employee.id }}/">{{ employee }}</a> <br>
 	{% endfor %}
 {% endblock %}

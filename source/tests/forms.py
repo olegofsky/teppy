@@ -9,20 +9,20 @@ class TestCaseForm(forms.ModelForm):
         exclude = ('QA_ID', 'status')
 
 
-class SuitAddForm(forms.ModelForm):
+class TestSuitForm(forms.ModelForm):
 
     class Meta:
         model = models.TestSuit
         exclude = ('QA_ID', 'status')
 
 
-class BugAddForm(forms.ModelForm):
+class BugForm(forms.ModelForm):
 
     class Meta:
         model = models.Bug
         exclude = ('QA_ID')
 
-class GlobalTestingAddForm(forms.ModelForm):
+class GlobalTestingForm(forms.ModelForm):
 
     class Meta:
         model = models.GlobalTesting

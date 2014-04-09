@@ -5,18 +5,18 @@
 {% endblock %}
 
 {% block content %}
-	<font size="4">{{ gt }}</font><br>
-	<font size="2">from <b>{{ gt.date_start }}</b> until <b>{{ gt.date_finish }}</b></font><br><br>
+	<font size="4">{{ globaltesting }}</font><br>
+	<font size="2">from <b>{{ globaltesting.date_start }}</b> until <b>{{ globaltesting.date_finish }}</b></font><br><br>
 
 	<table>
 		<tr>
 			<td>Author</td>
-			<td>{{ gt.author }}</td>
+			<td>{{ globaltesting.author }}</td>
 		</tr>
 		<tr>
 			<td>Testers</td>
 			<td>
-				{% for tester in gt.testers.all %}
+				{% for tester in globaltesting.testers.all %}
 					{{ tester }};
 				{% endfor %}
 			</td>

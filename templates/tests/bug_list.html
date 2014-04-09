@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-	{% for bug in bugs %}
+	{% for bug in object_list %}
 		<a href="{{ bug.get_absolute_url }}">{{ bug }}</a> <br>
 	{% endfor %}
 {% endblock %}

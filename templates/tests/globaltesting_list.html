@@ -11,7 +11,7 @@
 			<td>from</td>
 			<td>until</td>
 		<tr>
-		{% for gt in gts %}
+		{% for gt in object_list %}
 			<tr>
 				<td><a href="{{ gt.get_absolute_url }}"><font size="4">{{ gt }}</font></a></td>
 				<td>{{ gt.date_start }}</td>

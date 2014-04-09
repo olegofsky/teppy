@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-	{% for suit in suits %}
+	{% for suit in object_list %}
 		<a href="{{ suit.get_absolute_url }}"><font size="4">{{ suit }}</font></a><br>
 		{% if suit.get_cases %}
 			{% for case in suit.get_cases %}
