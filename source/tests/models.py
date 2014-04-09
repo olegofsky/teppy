@@ -74,23 +74,23 @@ class TestCase(models.Model):
 
     QA_ID = models.CharField(max_length=100, null=True, blank=True)
 
-    author = models.ForeignKey(User, related_name='cases_author')
-    developer = models.ForeignKey(User)
-    producer = models.ForeignKey(User, related_name='cases_spec_author')
+    author = models.ForeignKey(User, related_name='cases_author', verbose_name=u'Author')
+    developer = models.ForeignKey(User, verbose_name=u'Developer')
+    producer = models.ForeignKey(User, related_name='cases_spec_author', verbose_name=u'Producer')
 
-    suit = models.ForeignKey(TestSuit, null=True, blank=True)
+    suit = models.ForeignKey(TestSuit, null=True, blank=True, verbose_name=u'Associated suit')
 
-    priority = models.CharField(choices=PRIORITY_CHOICES, max_length=16)
+    priority = models.CharField(choices=PRIORITY_CHOICES, max_length=16, verbose_name=u'Priority')
 
-    setup = models.TextField()
-    idea = models.TextField()
-    procedure = models.TextField()
-    expected_result = models.TextField()
+    setup = models.TextField(verbose_name=u'Setup')
+    idea = models.TextField(verbose_name=u'Idea')
+    procedure = models.TextField(verbose_name=u'Procedure')
+    expected_result = models.TextField(verbose_name=u'Expected result')
 
-    status = models.CharField(choices=STATUS_CHOICES, max_length=16)
+    status = models.CharField(choices=STATUS_CHOICES, max_length=16, verbose_name=u'Status')
 
-    date_created = models.DateTimeField(auto_now_add=True)
-    date_modified = models.DateTimeField(auto_now=True)
+    date_created = models.DateTimeField(auto_now_add=True, verbose_name=u'Date created')
+    date_modified = models.DateTimeField(auto_now=True, verbose_name=u'Date modidfied')
 
     class Meta:
         verbose_name = 'Test case'

@@ -5,77 +5,83 @@
 {% endblock %}
 
 {% block content %}
-	<table class="table-bordered">
+	<a href="/tests/bug/add/{{ testcase.id }}/">Open bug</a>
+	<table class="table table-condensed">
 		<tr>
-			<td>author</td>
-			<td>{{ testcase.author }}</td>
+			<td> author </td>
+			<td><a href="{{ testcase.author.get_absolute_url }}"> {{ testcase.author }} </a> </td>
 		</tr>
 		
 		<tr>
-			<td>developer</td>
-			<td>{{ testcase.developer }}</td>
+			<td> developer </td>
+			<td><a href="{{ testcase.developer.get_absolute_url }}"> {{ testcase.developer }} </a> </td>
 		</tr>
 		
 		<tr>
-			<td>producer</td>
-			<td>{{ testcase.producer }}</td>
+			<td> producer </td>
+			<td><a href="{{ testcase.producer.get_absolute_url }}"> {{ testcase.producer }} </a> </td>
 		</tr>
 		
 		<tr>
-			<td>suit</td>
-			<td>{{ testcase.suit }}</td>
+			<td> suit </td>
+			{% if testcase.suit %}
+				<td><a href="{{ testcase.suite.get_absolute_url }}"> {{ testcase.suit }} </a> </td>
+			{% else %}
+				<td> --- </td>
+			{% endif %}
 		</tr>
 		
 		<tr>
-			<td>priority</td>
-			<td>{{ testcase.priority }}</td>
+			<td> priority </td>
+			<td>{{ testcase.get_priority_display }}</td>
 		</tr>
 		
 		<tr>
-			<td>setup</td>
+			<td> setup </td>
 			<td>{{ testcase.setup }}</td>
 		</tr>
 		
 		<tr>
-			<td>idea</td>
+			<td> idea </td>
 			<td>{{ testcase.idea }}</td>
 		</tr>
 		
 		<tr>
-			<td>procedure</td>
+			<td> procedure </td>
 			<td>{{ testcase.procedure }}</td>
 		</tr>
 		
 		<tr>
-			<td>expected_result</td>
+			<td> expected_result </td>
 			<td>{{ testcase.expected_result }}</td>
 		</tr>
 		
 		<tr>
-			<td>status</td>
-			<td>{{ testcase.status }}</td>
+			<td> status </td>
+			<td>{{ testcase.get_status_display }}</td>
 		</tr>
 		
 		<tr>
-			<td>date_created</td>
+			<td> bugs </td>
+			<td>
+				{% if testcase.get_bugs %}
+					{% for bug in testcase.get_bugs %}
+						<span class="badge badge-inverse"><a href="{{ bug.get_absolute_url }}">{{ bug }}</a></span>
+					{% endfor %}
+				{% else %}
+					---
+				{% endif %}
+			</td>
+		</tr>
+
+		<tr>
+			<td> date_created </td>
 			<td>{{ testcase.date_created }}</td>
 		</tr>
 		
 		<tr>
-			<td>date_modified</td>
+			<td> date_modified </td>
 			<td>{{ testcase.date_modified }}</td>
 		</tr>
 	</table>
-
-	{% if testcase.get_bugs %}
-		<font size="2">With bugs:</font> 
-		{% for bug in testcase.get_bugs %}
-			<font size="2"><a href="{{ bug.get_absolute_url }}">{{ bug }}</a>; </font>
-		{% endfor %}
-	{% else %}
-		<font size="2">nothing added</font>
-	{% endif %}
-	<br><br>
-	<font size="2"><a href="/tests/bug/add/{{ testcase.id }}/">Open bug</a></font>
-
 {% endblock %}

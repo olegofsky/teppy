@@ -100,11 +100,13 @@ class GTCreate(CreateView):
             }
 
     def form_valid(self, form):
-        generaltesting = form.save(commit=False)
+        generaltesting = form.save()
         for case_id in self.request.POST.getlist('test_cases'):
-            TestCaseInGT.objects.rceate(test_case_id=case_id, gt=generaltesting)
+            TestCaseInGT.objects.create(test_case_id=case_id, gt=generaltesting)
+
         for tester_id in self.request.POST.getlist('testerts'):
             generaltesting.testers.add(User.objects.get(id=tester_id))
+
         generaltesting.save()
         return super(GTCreate, self).form_valid(form)
 

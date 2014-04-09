@@ -5,14 +5,22 @@
 {% endblock %}
 
 {% block content %}
-		<table class="table table-condensed">
+	<table class="table table-condensed">
+		{% if object_list %}
+		<tr>
+			<th>case</th>
+			<th>author</th>
+			<th>priority</th>
+			<th>status</th>
+		<tr>
+		{% endif %}
 		{% for case in object_list %}
 			<tr>
-				<td> <a href="{{ case.get_absolute_url }}">{{ case }}</a> <td>
-				<td> <a href="{{ case.get_absolute_url }}">{{ case.author }}</a> <td>
-				<td> <a href="{{ case.get_absolute_url }}">{{ case.get_priority_display }}</a> <td>
-				<td> <a href="{{ case.get_absolute_url }}">{{ case.get_status_display }}</a> <td>
+				<td> <a href="{{ case.get_absolute_url }}">{{ case }}</a> </td>
+				<td> <a href="{{ case.author.get_absolute_url }}"> {{ case.author }}</a> </td>
+				<td> {{ case.get_priority_display }} </td>
+				<td> {{ case.get_status_display }} </td>
 			<tr>
 		{% endfor %}
-		<table>
+	<table>
 {% endblock %}

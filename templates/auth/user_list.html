@@ -5,9 +5,20 @@
 {% endblock %}
 
 {% block content %}
-	<div class="container">
-	{% for employee in object_list %}
-		<a href="/employee/employee/{{ employee.id }}/">{{ employee }}</a> <br>
-	{% endfor %}
-	</div>
+	<table class="table">
+		{% if object_list %}
+			<tr>
+				<td>user</td>
+				<td>suits</td>
+				<td>cases</td>
+			</tr>
+		{% endif %}
+		{% for employee in object_list %}
+			<tr>
+				<td> <a href="/employee/employee/{{ employee.id }}/">{{ employee }}</a> </td>
+				<td>{{ employee.suits_author.all.count }}</td>
+				<td>{{ employee.testcase_set.all.count }}</td>
+			</tr>
+		{% endfor %}
+	</table>
 {% endblock %}

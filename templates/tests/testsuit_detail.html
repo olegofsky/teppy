@@ -5,18 +5,19 @@
 {% endblock %}
 
 {% block content %}
-	<table class="table">
+	<a href="/tests/case/add/?based_on={{ testsuit.id }}">Attach case</a>
+	<table class="table table-condensed">
 		<tr>
 			<td>ID</td>
 			<td>{{ testsuit.id }}</td>
 		</tr>
 		<tr>
 			<td>Author</td>
-			<td>{{ testsuit.author }}</td>
+			<td><a href="{{ testsuit.author.get_absolute_url }}"> {{ testsuit.author }} </a> </td>
 		</tr>
 		<tr>
 			<td>Producer</td>
-			<td>{{ testsuit.producer }}</td>
+			<td><a href="{{ testsuit.producer.get_absolute_url }}"> {{ testsuit.producer }} </a> </td>
 		</tr>
 		<tr>
 			<td>Overview</td>
@@ -31,20 +32,22 @@
 			<td>{{ testsuit.spec }}</td>
 		</tr>
 		<tr>
+			<td>Cases</td>
+			<td>
+				{% if testsuit.get_cases %}
+					{% for case in testsuit.get_cases %}
+						<span class="badge badge-inverse"><a href="{{ case.get_absolute_url }}">{{ case }}</a></span>
+					{% endfor %}
+				{% else %}
+					---
+				{% endif %}
+			</td>
+		</tr>
+		<tr>
 			<td>Status</td>
 			<td>{{ testsuit.status }}</td>
 		</tr>
 	</table>
-	
-	<br>
-	{% if testsuit.get_cases %}
-		<font size="2">With cases:</font> 
-		{% for case in testsuit.get_cases %}
-			<font size="2"><a href="{{ case.get_absolute_url }}">{{ case }}</a>; </font>
-		{% endfor %}
-	{% else %}
-		<font size="2">nothing added</font>
-	{% endif %}
-	<br><br>
-	<font size="2"><a href="/tests/case/add/?based_on={{ testsuit.id }}">Attach case</a></font>
+
+
 {% endblock %}

@@ -5,7 +5,20 @@
 {% endblock %}
 
 {% block content %}
-	{% for bug in object_list %}
-		<a href="{{ bug.get_absolute_url }}">{{ bug }}</a> <br>
-	{% endfor %}
+	<table class="table table-condensed">
+		{% if object_list %}
+		<tr>
+			<th>bug</th>
+			<th>author</th>
+			<th>case</th>
+		<tr>
+		{% endif %}
+		{% for bug in object_list %}
+			<tr>
+				<td> <a href="{{ bug.get_absolute_url }}">{{ bug }}</a> </td>
+				<td> <a href="{{ bug.author.get_absolute_url }}"> {{ bug.author }}</a> </td>
+				<td> <a href="{{ bug.test_case.get_absolute_url }}"> {{ bug.test_case }} </a> </td>
+			</tr>
+		{% endfor %}
+	</table>
 {% endblock %}

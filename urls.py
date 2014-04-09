@@ -1,13 +1,15 @@
 from django.conf.urls.defaults import patterns, include, url
 from django.contrib.auth.views import login, logout
 from django.contrib import admin
-
-from source.employee.views import employee_list
+from django.views.generic import ListView
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^$', employee_list, {'template_name': 'auth/user_list.html'}),
+    # url(r'^$', employee_list, {'template_name': 'auth/user_list.html'}),
+    url(r'^$', login_required(ListView.as_view(model=User))),
     url(r'employee/', include('source.employee.urls')),
 
     url(r'^tests/', include('source.tests.urls')),

@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-	<table class="table">
+	<table class="table table-condensed">
 		<tr>
 			<td>date_opened</td>
 			<td>{{ bug.date_opened }}</td>
@@ -18,7 +18,7 @@
 
 		<tr>
 			<td>author</td>
-			<td>{{ bug.author }}</td>
+			<td><a href="{{ bug.author.get_absolute_url }}"> {{ bug.author }} </a></td>
 		</tr>
 
 		<tr>
@@ -33,7 +33,13 @@
 		
 		<tr>
 			<td>gt</td>
-			<td><a href="{{ bug.gt.get_absolute_url }}">{{ bug.gt }}</a></td>
+			<td>
+				{% if bug.gt %}
+					<a href="{{ bug.gt.get_absolute_url }}">{{ bug.gt }}</a>
+				{% else %}
+					---
+				{% endif %}
+			</td>
 		</tr>
 
 	</table>
