@@ -24,7 +24,6 @@ class TestSuit(models.Model):
             (STATUS_NOT_ACTIVE, u'not active'),
     )
 
-    QA_ID = models.CharField(max_length=100, null=True, blank=True)
     author = models.ForeignKey(User, related_name='suits_author')
     producer = models.ForeignKey(User, related_name='suits_spec_author')
 
@@ -72,8 +71,6 @@ class TestCase(models.Model):
             (STATUS_NOT_ACTIVE, u'not active'),
     )
 
-    QA_ID = models.CharField(max_length=100, null=True, blank=True)
-
     author = models.ForeignKey(User, related_name='cases_author', verbose_name=u'Author')
     developer = models.ForeignKey(User, verbose_name=u'Developer')
     producer = models.ForeignKey(User, related_name='cases_spec_author', verbose_name=u'Producer')
@@ -107,7 +104,6 @@ class TestCase(models.Model):
 
 
 class Bug(models.Model):
-    QA_ID = models.CharField(max_length=100, null=True, blank=True)
 
     author = models.ForeignKey(User, related_name='bug_commiter')
     traceback = models.TextField(null=True, blank=True)
@@ -153,7 +149,6 @@ class TestCaseInGT(models.Model):
 
 
 class GlobalTesting(models.Model):
-    QA_ID = models.CharField(max_length=100, null=True, blank=True)
 
     author = models.ForeignKey(User, related_name='initiator')
 

@@ -8,81 +8,48 @@
 	<font size="4">{{ globaltesting }}</font><br>
 	<font size="2">from <b>{{ globaltesting.date_start }}</b> until <b>{{ globaltesting.date_finish }}</b></font><br><br>
 
-	<table class="table">
+	<table class="table table-condensed">
 		<tr>
 			<td>Author</td>
-			<td>{{ globaltesting.author }}</td>
+			<td><a href="{{ globaltesting.author.get_absolute_url }}">{{ globaltesting.author }}</a></td>
 		</tr>
 		<tr>
 			<td>Testers</td>
 			<td>
 				{% for tester in globaltesting.testers.all %}
-					{{ tester }};
+					<a href="{{ tester.get_absolute_url }}">{{ tester }}</a>;
 				{% endfor %}
 			</td>
 		</tr>
 		<tr>
 			<td>Cases count</td>
-			<td>{{ gtvalues.cases_count }}</td>
+			<td>{{ gtvalues.get_cases_count }}</td>
 		</tr>
 		<tr>
 			<td>Passed cases count</td>
-			<td>{{ gtvalues.passed_cases_count }}</td>
+			<td>{{ gtvalues.get_passed_cases_count }}</td>
 		</tr>
 		<tr>
 			<td>Failed cases count</td>
-			<td>{{ gtvalues.failed_cases_count }}</td>
+			<td>{{ gtvalues.get_failed_cases_count }}</td>
 		</tr>
 		<tr>
 			<td>Time remains</td>
-			<td>{{ gtvalues.time_remains }}</td>
+			<td>{{ gtvalues.get_seconds_remains }}</td>
 		</tr>
 		<tr>
-			<td>Avg speed</td>
-			<td>{{ gtvalues.avg_speed }}</td>
+			<td>Elapsed time</td>
+			<td>{{ gtvalues.get_elapsed_seconds }}</td>
+		</tr>
+		<tr>
+			<td>Avg speed (case per second) </td>
+			<td>{{ gtvalues.get_avg_speed }}</td>
 		</tr>
 		<tr>
 			<td>Required avg speed</td>
-			<td>{{ gtvalues.required_avg_speed }}</td>
+			<td>{{ gtvalues.get_required_avg_speed }}</td>
 		</tr>
 	</table>
-	
-	<table class="table">
-		<tr>
-			<td>Case</td>
-			<td>Status</td>
-			<td>Tester</td>
-			<td>Bugs</td>
-			<td>Actions</td>
-		</tr>
-		{% for tcigt in gt_tests %}
-			<tr>
-				<td><a href="{{ tcigt.test_case.get_absolute_url }}">{{ tcigt }}</a></td>
-				<td>{{ tcigt.status }}</td>
-				<td>
-					{% if tcigt.tester %}
-						{{ tcigt.tester }}
-					{% else %}
-						nobody
-					{% endif %}
-				</td>
-				<td>
-					{% for bug in tcigt.get_bugs %}
-						<a href="{{ bug.get_absolute_url }}">{{ bug }}</a>;
-					{% endfor %}
-				</td>
-				<td>
-					<font size="1">
-						{#<a href="/tests/pick_up_case_in_gt/{{ tcigt.id }}/{{ user_to_attach.id }}/">(set)</a>#}
-						<a href="#">set</a>
-						<a href="/tests/pick_up_case_in_gt/{{ tcigt.id }}/">get</a>
-						<a href="/tests/bug/add/{{ tcigt.id }}/">bugreport</a>
-						<a href="/tests/pass_case_in_gt/{{ tcigt.id }}/">pass</a>
-					</font>
-				</td>
-			</tr>
-		{% endfor %}
-	</table>
-	
+	{% include 'tests/globaltesting_chart.html' %}	
 	<br>
 {% endblock %}

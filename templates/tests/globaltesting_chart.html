@@ -1,0 +1,35 @@
+<table class="table table-condensed">
+<tr>
+	<td>Case</td>
+	<td>Status</td>
+	<td>Tester</td>
+	<td>Bugs</td>
+	<td>Actions</td>
+</tr>
+{% for tcigt in gt_tests %}
+	<tr>
+		<td><a href="{{ tcigt.test_case.get_absolute_url }}">{{ tcigt.test_case }}</a></td>
+		<td>{{ tcigt.status }}</td>
+		<td>
+			{% if tcigt.tester %}
+				{{ tcigt.tester }}
+			{% else %}
+				nobody
+			{% endif %}
+		</td>
+		<td>
+			{% for bug in tcigt.get_bugs %}
+				<a href="{{ bug.get_absolute_url }}">{{ bug }}</a>;
+			{% endfor %}
+		</td>
+		<td>
+			<font size="1">
+				<a href="#">set</a>
+				<a href="/tests/pick_up_case_in_gt/{{ tcigt.id }}/">get</a>
+				<a href="/tests/bug/add/{{ tcigt.id }}/">bugreport</a>
+				<a href="/tests/pass_case_in_gt/{{ tcigt.id }}/">pass</a>
+			</font>
+		</td>
+	</tr>
+{% endfor %}
+</table>

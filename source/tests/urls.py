@@ -5,6 +5,7 @@ from django.views.generic import ListView, DetailView
 
 from source.tests import views
 from source.tests.models import TestCase, TestSuit, Bug, GlobalTesting
+from source.tests.classes import gt_params
 
 urlpatterns = patterns('',
         url(r'^suit/$', login_required(ListView.as_view(model=TestSuit))),
@@ -32,4 +33,6 @@ urlpatterns = patterns('',
         url(r'^pick_up_case_in_gt/(?P<tcigt_id>\d+)/$', views.assign_case_in_gt),
         url(r'^assign_case_in_gt/(?P<tcigt_id>\d+)/(?P<user_id>\d+)/$', views.assign_case_in_gt),
         url(r'^pass_case_in_gt/(?P<tcigt_id>\d+)/$', views.pass_case_in_gt),
+
+        url(r'^get_gt_params/(?P<gt_id>\d+)/$', gt_params),
 )
