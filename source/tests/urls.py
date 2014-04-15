@@ -24,6 +24,7 @@ urlpatterns = patterns('',
         url(r'^bug/(?P<pk>\d+)/$', login_required(DetailView.as_view(model=Bug))),
         url(r'^bug/add/$', views.BugCreate.as_view()),
         url(r'^bug/add/(?P<test_case_id>\d+)/$', views.BugCreate.as_view()),
+        url(r'^bug/add/(?P<test_case_id>\d+)/(?P<gt_id>\d+)/$', views.BugCreate.as_view()),
 
         url(r'^gt/$', login_required(ListView.as_view(model=GlobalTesting))),
         # url(r'^gt/add/', views.gt_add,login_required( {'template_name': 'tests/globaltesting_form.html'})),

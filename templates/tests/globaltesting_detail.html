@@ -8,6 +8,10 @@
 	<font size="4">{{ globaltesting }}</font><br>
 	<font size="2">from <b>{{ globaltesting.date_start }}</b> until <b>{{ globaltesting.date_finish }}</b></font><br><br>
 
+	<div class="kamen-data" id="kamen-data">
+        <font size="4"> CLICK HERE </font>
+    </div>
+
 	<table class="table table-condensed">
 		<tr>
 			<td>Author</td>
@@ -23,33 +27,60 @@
 		</tr>
 		<tr>
 			<td>Cases count</td>
-			<td>{{ gtvalues.get_cases_count }}</td>
+			<td> 
+				<div class="cases_count">
+					{{ gtvalues.get_cases_count }}
+				</div>
+			</td>
 		</tr>
 		<tr>
 			<td>Passed cases count</td>
-			<td>{{ gtvalues.get_passed_cases_count }}</td>
+			<td> 
+				<div class="passed_cases_count">
+					{{ gtvalues.get_passed_cases_count }}
+				</div>
+			</td>
 		</tr>
 		<tr>
 			<td>Failed cases count</td>
-			<td>{{ gtvalues.get_failed_cases_count }}</td>
+			<td> 
+				<div class="failed_cases_count">
+					{{ gtvalues.get_failed_cases_count }}
+				</div>
+			</td>
 		</tr>
 		<tr>
 			<td>Time remains</td>
-			<td>{{ gtvalues.get_seconds_remains }}</td>
+			<td> 
+				<div class="seconds_remains">
+					{{ gtvalues.get_seconds_remains }}
+				</div>
+			</td>
 		</tr>
 		<tr>
 			<td>Elapsed time</td>
-			<td>{{ gtvalues.get_elapsed_seconds }}</td>
+			<td> 
+				<div class="elapsed_seconds">
+					{{ gtvalues.get_elapsed_seconds }}
+				</div>
+			</td>
 		</tr>
 		<tr>
 			<td>Avg speed (case per second) </td>
-			<td>{{ gtvalues.get_avg_speed }}</td>
+			<td> 
+				<div class="avg_speed">
+					{{ gtvalues.get_avg_speed }}
+				</div>
+			</td>
 		</tr>
 		<tr>
 			<td>Required avg speed</td>
-			<td>{{ gtvalues.get_required_avg_speed }}</td>
+			<td> 
+				<div class="required_avg_speed">
+					{{ gtvalues.get_required_avg_speed }}
+				</div>
+			</td>
 		</tr>
 	</table>
 	{% include 'tests/globaltesting_chart.html' %}	
-	<br>
 {% endblock %}

@@ -36,16 +36,18 @@ class GTValues(object):
     def get_required_avg_speed(self):
         return u'N/A'
 
+    def as_dict(self):
+        return {
+            'cases_count': self.get_cases_count(),
+            'passed_cases_count': self.get_passed_cases_count(),
+            'failed_cases_count': self.get_failed_cases_count(),
+            'seconds_remains': self.get_seconds_remains(),
+            'elapsed_seconds': self.get_elapsed_seconds(),
+            'avg_speed': self.get_avg_speed(),
+            'required_avg_speed': self.get_required_avg_speed(),
+        }
 
 def gt_params(request, gt_id):
     gt = GlobalTesting.objects.get(id=1)
     gt_values = GTValues(gt)
-    return HttpResponse(json.dumps({
-        'cases_count': gt_values.get_cases_count(),
-        'passed_cases_count': gt_values.get_passed_cases_count(),
-        'failed_cases_count': gt_values.get_failed_cases_count(),
-        'seconds_remains': gt_values.get_seconds_remains(),
-        'elapsed_seconds': gt_values.get_elapsed_seconds(),
-        'avg_speed': gt_values.get_avg_speed(),
-        'required_avg_speed': gt_values.get_required_avg_speed(),
-    }))
+    return HttpResponse(json.dumps(gt_values.as_dict()))

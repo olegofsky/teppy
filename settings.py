@@ -73,6 +73,7 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     'source.tests',
     'source.employee',
+    'utils',
 )
 
 LOGGING = {

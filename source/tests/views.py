@@ -71,9 +71,13 @@ class BugCreate(CreateView):
 
     def get_initial(self, **kwargs):
         form_kwargs = {'author': self.request.user}
+
         if 'test_case_id' in self.kwargs and self.kwargs['test_case_id']:
-            test_case = TestCase.objects.get(id=self.kwargs['test_case_id'])
-            form_kwargs['test_case'] = test_case
+            form_kwargs['test_case'] = TestCase.objects.get(id=self.kwargs['test_case_id'])
+
+        if 'gt_id' in self.kwargs and self.kwargs['gt_id']:
+            form_kwargs['gt'] = GlobalTesting.objects.get(id=self.kwargs['gt_id'])
+
         return form_kwargs
 
     def form_valid(self, form):
