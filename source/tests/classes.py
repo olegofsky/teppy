@@ -35,6 +35,12 @@ class GTValues(object):
         required_avg_speed = float(self.get_cases_count()) / self.get_seconds_remains()
         return required_avg_speed
 
+    def get_avg_time_per_case(self):
+        avg_time_per_case = u'N/A'
+        if self.get_passed_cases_count():
+            avg_time_per_case = float(self.get_elapsed_seconds()) / float(self.get_passed_cases_count())
+        return avg_time_per_case
+
     def get_required_avg_time_per_case(self):
         required_avg_time_per_case = float(self.get_seconds_remains()) / float(self.get_cases_count())
         return required_avg_time_per_case
@@ -48,5 +54,6 @@ class GTValues(object):
             'elapsed_seconds': self.get_elapsed_seconds(),
             'avg_speed': self.get_avg_speed(),
             'required_avg_speed': self.get_required_avg_speed(),
+            'avg_time_per_case': self.get_avg_time_per_case(),
             'required_avg_time_per_case': self.get_required_avg_time_per_case()
         }
