@@ -1,30 +1,39 @@
 {% extends "base.html" %}
+{% block scripts %}
+<script>
+$(document).ready(function (evt) {
+	var ws;
+	ws = new WebSocket("ws://localhost:8888/get_gtvalues/" + {{ globaltesting.id }} + "/");
+
+	ws.onmessage = function(evt) {
+  		gtvalues = jQuery.parseJSON(evt.data);
+  		$.each(gtvalues, function(key, value){
+  			$("div." + key).text(value);
+  		});
+  	};
+  	ws.onclose = function(evt) { 
+  		// TODO humanize this error
+    	alert('tornado connection closed!');
+  	};
+  	ws.onopen = function(evt ){ 
+  	};
+});
+</script>
+{% endblock %}
 
 {% block navi %}
 	{% include "tests/globaltesting_navigation.html" %}
 {% endblock %}
 
 {% block content %}
-	<font size="4">{{ globaltesting }}</font><br>
-	<font size="2">from <b>{{ globaltesting.date_start }}</b> until <b>{{ globaltesting.date_finish }}</b></font><br><br>
-
-	<div class="kamen-data" id="kamen-data">
-        <font size="4"> CLICK HERE </font>
-    </div>
-
+	<font size="4">{{ globaltesting }}</font> led <a href="{{ globaltesting.author.get_absolute_url }}">{{ globaltesting.author }}</a> <br>
+	<font size="2">from <b>{{ globaltesting.date_start }}</b> until <b>{{ globaltesting.date_finish }}</b></font><br>
+	Team: 
+	{% for tester in globaltesting.testers.all %}
+		<a href="{{ tester.get_absolute_url }}">{{ tester }}</a>;
+	{% endfor %}
+	<br><br>
 	<table class="table table-condensed">
-		<tr>
-			<td>Author</td>
-			<td><a href="{{ globaltesting.author.get_absolute_url }}">{{ globaltesting.author }}</a></td>
-		</tr>
-		<tr>
-			<td>Testers</td>
-			<td>
-				{% for tester in globaltesting.testers.all %}
-					<a href="{{ tester.get_absolute_url }}">{{ tester }}</a>;
-				{% endfor %}
-			</td>
-		</tr>
 		<tr>
 			<td>Cases count</td>
 			<td> 
@@ -78,6 +87,14 @@
 			<td> 
 				<div class="required_avg_speed">
 					{{ gtvalues.get_required_avg_speed }}
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>Required time per case</td>
+			<td> 
+				<div class="required_avg_time_per_case">
+					{{ gtvalues.get_required_avg_time_per_case }}
 				</div>
 			</td>
 		</tr>

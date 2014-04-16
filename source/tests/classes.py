@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
-import json
-from django.http import HttpResponse
 
-from source.tests.models import TestCaseInGT, GlobalTesting
+from source.tests.models import TestCaseInGT
 
 class GTValues(object):
     def __init__(self, gt):
@@ -34,7 +32,12 @@ class GTValues(object):
         return avg_speed
 
     def get_required_avg_speed(self):
-        return u'N/A'
+        required_avg_speed = float(self.get_cases_count()) / self.get_seconds_remains()
+        return required_avg_speed
+
+    def get_required_avg_time_per_case(self):
+        required_avg_time_per_case = float(self.get_seconds_remains()) / float(self.get_cases_count())
+        return required_avg_time_per_case
 
     def as_dict(self):
         return {
@@ -45,9 +48,5 @@ class GTValues(object):
             'elapsed_seconds': self.get_elapsed_seconds(),
             'avg_speed': self.get_avg_speed(),
             'required_avg_speed': self.get_required_avg_speed(),
+            'required_avg_time_per_case': self.get_required_avg_time_per_case()
         }
-
-def gt_params(request, gt_id):
-    gt = GlobalTesting.objects.get(id=1)
-    gt_values = GTValues(gt)
-    return HttpResponse(json.dumps(gt_values.as_dict()))

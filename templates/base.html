@@ -3,33 +3,8 @@
 	<head>
 		<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" media="screen">
 		<script src="http://code.jquery.com/jquery.min.js"></script>
-	    <script>
-	      $(document).ready(function () {
-	 
-	        var ws;
-	 
-	        $("#kamen-data").click(function(evt) {
-	          evt.preventDefault();
-	          ws = new WebSocket("ws://localhost:8888/get_gtvalues/" + {{ globaltesting.id }} + "/");
-	 
-	          ws.onmessage = function(evt) {
-	          	gtvalues = jQuery.parseJSON(evt.data);
-	          	$.each(gtvalues, function(key, value){
-	          		$("div." + key).text(value);
-	          	});
-	          };
-	          ws.onclose = function(evt) { 
-	            $("div.kamen-data").text("Connection close");
-	          };
-	          ws.onopen = function(evt ){ 
-	            $("#host").css("background", "#00ff00"); 
-	            $("#port").css("background", "#00ff00"); 
-	            $("#uri").css("background", "#00ff00");
-	          };
-	        });
-	 
-	      });
-	    </script>
+		{% block scripts %}
+		{% endblock %}
 	</head>
 	<div class="container">
 		<div class="navbar">

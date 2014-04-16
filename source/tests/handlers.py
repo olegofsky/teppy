@@ -5,13 +5,13 @@ import tornado.websocket
 
 import json
 
-# from django.contrib.auth.models import User
 from source.tests.models import GlobalTesting
 from source.tests.classes import GTValues
 
 class GTValuesHandler(tornado.websocket.WebSocketHandler):
 
     def open(self, gt_id):
+        # set self.gt_id for self.gtvalues
         self.gt_id = gt_id
         scheduled = tornado.ioloop.PeriodicCallback(self.gtvalues, 500)
         scheduled.start()
@@ -23,6 +23,7 @@ class GTValuesHandler(tornado.websocket.WebSocketHandler):
         print 'connection closed'
 
     def gtvalues(self):
+        # gt_id from self.open
         gt = GlobalTesting.objects.get(id=self.gt_id)
         gtvalues_dict = GTValues(gt).as_dict()
         self.write_message(json.dumps(gtvalues_dict))
