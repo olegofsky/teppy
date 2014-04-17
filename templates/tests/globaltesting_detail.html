@@ -15,12 +15,23 @@ $(document).ready(function (evt) {
   		// TODO humanize this error
     	alert('tornado connection closed!');
   	};
-  	ws.onopen = function(evt ){ 
-  	};
+  	ws.onopen = function(evt ){};
+
+	$(".get_tcigt").click(function(obj){
+		ws.send('get_tcigt_' + $(this).attr("id"));
+	});
+	$(".bugreport_tcigt").click(function(obj){
+		ws.send('bugreport_tcigt_' + $(this).attr("id"));
+	});
+	$(".pass_tcigt").click(function(obj){
+		ws.send('pass_tcigt_' + $(this).attr("id"));
+	});
+	$(".set_tcigt").click(function(obj){
+		ws.send('set_tcigt_' + $(this).attr("id"));
+	});
+
+
 });
-
-
-
 </script>
 {% endblock %}
 
