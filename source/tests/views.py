@@ -128,6 +128,7 @@ class GTDetails(DetailView):
         gt = GlobalTesting.objects.get(id=self.kwargs['pk'])
         context['gt_tests'] = gt.testcaseingt_set.all().order_by('id')
         context['gtvalues'] = GTValues(gt)
+        context['user_list'] = User.objects.all()
         return context
 
 @login_required
