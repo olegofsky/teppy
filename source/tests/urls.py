@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.contrib.auth.decorators import login_required
-from django.conf.urls.defaults import url, patterns
+from django.conf.urls import url, patterns
 from django.views.generic import ListView, DetailView
 
 from source.tests import views

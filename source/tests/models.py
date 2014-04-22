@@ -42,6 +42,9 @@ class TestSuit(models.Model):
     def __unicode__(self):
         return 'Test suit #{0}'.format(self.id)
 
+    def as_html(self):
+        return u'<span class="badge badge-info">{0}</span>'.format(self.__unicode__())
+
     def get_absolute_url(self):
         return '/tests/suit/{0}/'.format(self.id)
 

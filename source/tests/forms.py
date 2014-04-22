@@ -20,7 +20,7 @@ class BugForm(forms.ModelForm):
 
     class Meta:
         model = models.Bug
-        exclude = ('QA_ID')
+        exclude = ('QA_ID', )
 
 class GlobalTestingForm(forms.ModelForm):
 
