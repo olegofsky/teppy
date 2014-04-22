@@ -1,0 +1,40 @@
+<table class="table table-condensed">
+<tr>
+	<td>Case</td>
+	<td>Status</td>
+	<td>Tester</td>
+	<td>Bugs</td>
+	<td>Actions</td>
+</tr>
+{% for tcigt in gt_tests %}
+	<tr>
+		<td><a href="{{ tcigt.test_case.get_absolute_url }}">{{ tcigt.test_case }}</a></td>
+		<td>{{ tcigt.status }}</td>
+		<td>
+			{% if tcigt.tester %}
+				{{ tcigt.tester }}
+			{% else %}
+				nobody
+			{% endif %}
+		</td>
+		<td>
+			{% for bug in tcigt.get_bugs %}
+				<a href="{{ bug.get_absolute_url }}">{{ bug }}</a>;
+			{% endfor %}
+		</td>
+		<td>
+			<font size="1">
+	        	<div class="dropdown">
+	        		<a class="dropdown-toggle" data-toggle="dropdown" href="#">set</a>
+	        		<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+	        			{% include "tests/_common/user_list_to_set_tcigt.html" with object_list=user_list %}
+		        	</ul>
+	        	</div>
+	        	<div class="get_tcigt" id="{{ tcigt.id }}">get</div>
+				<div class="bugreport_tcigt" id="{{ tcigt.id }}">bugreport</div>
+				<div class="pass_tcigt" id="{{ tcigt.id }}">pass</div>
+			</font>
+		</td>
+	</tr>
+{% endfor %}
+</table>

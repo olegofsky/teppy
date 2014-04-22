@@ -1,88 +1,126 @@
 {% extends "base.html" %}
+{% block scripts %}
+<script>
+$(document).ready(function (evt) {
+	var ws;
+	ws = new WebSocket("ws://localhost:8888/get_gtvalues/" + {{ globaltesting.id }} + "/");
+
+	ws.onmessage = function(evt) {
+  		gtvalues = jQuery.parseJSON(evt.data);
+  		$.each(gtvalues, function(key, value){
+  			$("div." + key).text(value);
+  		});
+  	};
+  	ws.onclose = function(evt) { 
+  		// TODO humanize this error
+    	alert('tornado connection closed!');
+  	};
+  	ws.onopen = function(evt ){};
+
+	$(".get_tcigt").click(function(obj){
+		ws.send('get_tcigt_' + $(this).attr("id"));
+	});
+	$(".bugreport_tcigt").click(function(obj){
+		ws.send('bugreport_tcigt_' + $(this).attr("id"));
+	});
+	$(".pass_tcigt").click(function(obj){
+		ws.send('pass_tcigt_' + $(this).attr("id"));
+	});
+	$(".set_tcigt").click(function(obj){
+		ws.send('set_tcigt_' + $(this).attr("id"));
+	});
+
+
+});
+</script>
+{% endblock %}
 
 {% block navi %}
 	{% include "tests/globaltesting_navigation.html" %}
 {% endblock %}
 
 {% block content %}
-	<font size="4">{{ globaltesting }}</font><br>
-	<font size="2">from <b>{{ globaltesting.date_start }}</b> until <b>{{ globaltesting.date_finish }}</b></font><br><br>
 
-	<table class="table">
+	<font size="4">{{ globaltesting }}</font> led <a href="{{ globaltesting.author.get_absolute_url }}">{{ globaltesting.author }}</a> <br>
+	<font size="2">from <b>{{ globaltesting.date_start }}</b> until <b>{{ globaltesting.date_finish }}</b></font><br>
+	Team: 
+	{% for tester in globaltesting.testers.all %}
+		<a href="{{ tester.get_absolute_url }}">{{ tester }}</a>;
+	{% endfor %}
+	<br><br>
+	<table class="table table-condensed">
 		<tr>
-			<td>Author</td>
-			<td>{{ globaltesting.author }}</td>
-		</tr>
-		<tr>
-			<td>Testers</td>
-			<td>
-				{% for tester in globaltesting.testers.all %}
-					{{ tester }};
-				{% endfor %}
+			<td>Cases count</td>
+			<td> 
+				<div class="cases_count">
+					{{ gtvalues.get_cases_count }}
+				</div>
 			</td>
 		</tr>
 		<tr>
-			<td>Cases count</td>
-			<td>{{ gtvalues.cases_count }}</td>
-		</tr>
-		<tr>
 			<td>Passed cases count</td>
-			<td>{{ gtvalues.passed_cases_count }}</td>
+			<td> 
+				<div class="passed_cases_count">
+					{{ gtvalues.get_passed_cases_count }}
+				</div>
+			</td>
 		</tr>
 		<tr>
 			<td>Failed cases count</td>
-			<td>{{ gtvalues.failed_cases_count }}</td>
+			<td> 
+				<div class="failed_cases_count">
+					{{ gtvalues.get_failed_cases_count }}
+				</div>
+			</td>
 		</tr>
 		<tr>
 			<td>Time remains</td>
-			<td>{{ gtvalues.time_remains }}</td>
+			<td> 
+				<div class="seconds_remains">
+					{{ gtvalues.get_seconds_remains }}
+				</div>
+			</td>
 		</tr>
 		<tr>
-			<td>Avg speed</td>
-			<td>{{ gtvalues.avg_speed }}</td>
+			<td>Elapsed time</td>
+			<td> 
+				<div class="elapsed_seconds">
+					{{ gtvalues.get_elapsed_seconds }}
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>Avg speed (case per second) </td>
+			<td> 
+				<div class="avg_speed">
+					{{ gtvalues.get_avg_speed }}
+				</div>
+			</td>
 		</tr>
 		<tr>
 			<td>Required avg speed</td>
-			<td>{{ gtvalues.required_avg_speed }}</td>
+			<td> 
+				<div class="required_avg_speed">
+					{{ gtvalues.get_required_avg_speed }}
+				</div>
+			</td>
 		</tr>
-	</table>
-	
-	<table class="table">
 		<tr>
-			<td>Case</td>
-			<td>Status</td>
-			<td>Tester</td>
-			<td>Bugs</td>
-			<td>Actions</td>
+			<td>Time per case</td>
+			<td> 
+				<div class="avg_time_per_case">
+					{{ gtvalues.get_avg_time_per_case }}
+				</div>
+			</td>
 		</tr>
-		{% for tcigt in gt_tests %}
-			<tr>
-				<td><a href="{{ tcigt.test_case.get_absolute_url }}">{{ tcigt }}</a></td>
-				<td>{{ tcigt.status }}</td>
-				<td>
-					{% if tcigt.tester %}
-						{{ tcigt.tester }}
-					{% else %}
-						nobody
-					{% endif %}
-				</td>
-				<td>
-					{% for bug in tcigt.get_bugs %}
-						<a href="{{ bug.get_absolute_url }}">{{ bug }}</a>;
-					{% endfor %}
-				</td>
-				<td>
-					<font size="1">
-						{#<a href="/tests/pick_up_case_in_gt/{{ tcigt.id }}/{{ user_to_attach.id }}/">(set)</a>#}
-						<a href="#">set</a>
-						<a href="/tests/pick_up_case_in_gt/{{ tcigt.id }}/">get</a>
-						<a href="/tests/bug/add/{{ tcigt.id }}/">bugreport</a>
-						<a href="/tests/pass_case_in_gt/{{ tcigt.id }}/">pass</a>
-					</font>
-				</td>
-			</tr>
-		{% endfor %}
+		<tr>
+			<td>Required time per case</td>
+			<td> 
+				<div class="required_avg_time_per_case">
+					{{ gtvalues.get_required_avg_time_per_case }}
+				</div>
+			</td>
+		</tr>
 	</table>
-	
-	<br>
+	{% include 'tests/globaltesting_chart.html' %}	
 {% endblock %}

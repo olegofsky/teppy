@@ -71,9 +71,13 @@ class BugCreate(CreateView):
 
     def get_initial(self, **kwargs):
         form_kwargs = {'author': self.request.user}
+
         if 'test_case_id' in self.kwargs and self.kwargs['test_case_id']:
-            test_case = TestCase.objects.get(id=self.kwargs['test_case_id'])
-            form_kwargs['test_case'] = test_case
+            form_kwargs['test_case'] = TestCase.objects.get(id=self.kwargs['test_case_id'])
+
+        if 'gt_id' in self.kwargs and self.kwargs['gt_id']:
+            form_kwargs['gt'] = GlobalTesting.objects.get(id=self.kwargs['gt_id'])
+
         return form_kwargs
 
     def form_valid(self, form):
@@ -100,15 +104,20 @@ class GTCreate(CreateView):
             }
 
     def form_valid(self, form):
-        generaltesting = form.save()
+        gt = form.save(commit=False)
+        gt.save()
+
+        for tester_id in self.request.POST.getlist('testers'):
+            gt.testers.add(User.objects.get(id=tester_id))
+
         for case_id in self.request.POST.getlist('test_cases'):
-            TestCaseInGT.objects.create(test_case_id=case_id, gt=generaltesting)
+            TestCaseInGT.objects.create(
+                status=TestCaseInGT.STATUS_QUEUED,
+                test_case_id=case_id,
+                gt=gt,
+            )
 
-        for tester_id in self.request.POST.getlist('testerts'):
-            generaltesting.testers.add(User.objects.get(id=tester_id))
-
-        generaltesting.save()
-        return super(GTCreate, self).form_valid(form)
+        return HttpResponseRedirect(gt.get_absolute_url())
 
 
 class GTDetails(DetailView):
@@ -116,9 +125,10 @@ class GTDetails(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(GTDetails, self).get_context_data(**kwargs)
-        gt = GlobalTesting(id=self.kwargs['pk'])
-        context['gt_tests'] = TestCaseInGT.objects.filter(gt=self.kwargs['pk'])
+        gt = GlobalTesting.objects.get(id=self.kwargs['pk'])
+        context['gt_tests'] = gt.testcaseingt_set.all().order_by('id')
         context['gtvalues'] = GTValues(gt)
+        context['user_list'] = User.objects.all()
         return context
 
 @login_required
@@ -160,6 +170,8 @@ def assign_case_in_gt(request, tcigt_id, user_id=None):
 @login_required
 def pass_case_in_gt(request, tcigt_id):
     tcigt = TestCaseInGT.objects.get(id=tcigt_id)
+    if not tcigt.tester:
+        tcigt.tester = request.user
     tcigt.status = TestCaseInGT.STATUS_PASSED
     tcigt.save()
     return HttpResponseRedirect(tcigt.gt.get_absolute_url())

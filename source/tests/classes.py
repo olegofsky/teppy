@@ -5,25 +5,55 @@ from source.tests.models import TestCaseInGT
 
 class GTValues(object):
     def __init__(self, gt):
-        cases_count = gt.test_cases.all().count()
-        self.cases_count = cases_count
-        passed_cases_count = gt.test_cases.filter(status=TestCaseInGT.STATUS_PASSED).count()
-        self.passed_cases_count = passed_cases_count
-        self.failed_cases_count = gt.test_cases.filter(status=TestCaseInGT.STATUS_FAILED).count()
+        self.gt = gt
 
-        self.time_remains = 'N/A'
-        self.avg_speed = 'N/A'
-        self.required_avg_speed = 'N/A'
-'''
-        if gt.date_finish:
-            time_remains = gt.date_finish - datetime.now()
-            self.time_remains = time_remains
-            if time_remains.minutes:
-                self.required_avg_speed = (cases_count - passed_cases_count) / time_remains.minutes
+    def get_cases_count(self):
+        return self.gt.test_cases.all().count()
 
-        if gt.date_start:
-            time_left = datetime.now() - gt.date_start
-            minutes_left = time_left.seconds / 60
-            if minutes_left:
-                self.avg_speed = passed_cases_count / minutes_left
-'''
+    def get_passed_cases_count(self):
+        return self.gt.testcaseingt_set.filter(status=TestCaseInGT.STATUS_PASSED).count()
+
+    def get_failed_cases_count(self):
+        return self.gt.testcaseingt_set.filter(status=TestCaseInGT.STATUS_FAILED).count()
+
+    def get_seconds_remains(self):
+        if self.gt.date_finish > datetime.now():
+            return (self.gt.date_finish - datetime.now()).seconds
+        else:
+            return -(datetime.now() - self.gt.date_finish).seconds
+
+    def get_elapsed_seconds(self):
+        return (datetime.now() - self.gt.date_start).seconds
+
+    def get_avg_speed(self):
+        avg_speed = u'N/A'
+        if self.get_passed_cases_count():
+            avg_speed = float(self.get_passed_cases_count()) / self.get_elapsed_seconds()
+        return avg_speed
+
+    def get_required_avg_speed(self):
+        required_avg_speed = float(self.get_cases_count()) / self.get_seconds_remains()
+        return required_avg_speed
+
+    def get_avg_time_per_case(self):
+        avg_time_per_case = u'N/A'
+        if self.get_passed_cases_count():
+            avg_time_per_case = float(self.get_elapsed_seconds()) / float(self.get_passed_cases_count())
+        return avg_time_per_case
+
+    def get_required_avg_time_per_case(self):
+        required_avg_time_per_case = float(self.get_seconds_remains()) / float(self.get_cases_count())
+        return required_avg_time_per_case
+
+    def as_dict(self):
+        return {
+            'cases_count': self.get_cases_count(),
+            'passed_cases_count': self.get_passed_cases_count(),
+            'failed_cases_count': self.get_failed_cases_count(),
+            'seconds_remains': self.get_seconds_remains(),
+            'elapsed_seconds': self.get_elapsed_seconds(),
+            'avg_speed': self.get_avg_speed(),
+            'required_avg_speed': self.get_required_avg_speed(),
+            'avg_time_per_case': self.get_avg_time_per_case(),
+            'required_avg_time_per_case': self.get_required_avg_time_per_case()
+        }
