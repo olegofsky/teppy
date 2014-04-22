@@ -14,6 +14,8 @@ import json
 from django.contrib.auth.models import User
 from source.tests.models import GlobalTesting
 from source.tests.classes import GTValues
+from source.tests.models import TestCaseInGT
+from source.tests.views import pass_tcigt
 
 class GTHandler(tornado.websocket.WebSocketHandler):
 
@@ -40,6 +42,9 @@ class GTHandler(tornado.websocket.WebSocketHandler):
         if 'bugreport_tcigt' in message:
             print 'IM GOINT TO {0} WITH ID IS {1}'.format('bugreport', tcigt_id)
         if 'pass_tcigt' in message:
+            tcigt = TestCaseInGT.objects.get(id=tcigt_id)
+            pass_tcigt(tcigt, self.user)
+            self.write_message(json.dumps({'tcigt_status{0}'.format(tcigt.id): 'passed'}))
             print 'IM GOINT TO {0} WITH ID IS {1}'.format('pass', tcigt_id)
         if 'set_tcigt' in message:
             print 'IM GOINT TO {0} WITH ID IS {1}'.format('set', tcigt_id)
@@ -48,7 +53,6 @@ class GTHandler(tornado.websocket.WebSocketHandler):
         print 'connection closed'
 
     def gtvalues(self):
-        # gt_id from self.open
         gt = GlobalTesting.objects.get(id=self.gt_id)
         gtvalues_dict = GTValues(gt).as_dict()
         self.write_message(json.dumps(gtvalues_dict))

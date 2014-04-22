@@ -170,8 +170,11 @@ def assign_case_in_gt(request, tcigt_id, user_id=None):
 @login_required
 def pass_case_in_gt(request, tcigt_id):
     tcigt = TestCaseInGT.objects.get(id=tcigt_id)
+    pass_tcigt(tcigt, request.user)
+    return HttpResponseRedirect(tcigt.gt.get_absolute_url())
+
+def pass_tcigt(tcigt, user):
     if not tcigt.tester:
-        tcigt.tester = request.user
+        tcigt.tester = user
     tcigt.status = TestCaseInGT.STATUS_PASSED
     tcigt.save()
-    return HttpResponseRedirect(tcigt.gt.get_absolute_url())

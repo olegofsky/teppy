@@ -9,7 +9,11 @@
 {% for tcigt in gt_tests %}
 	<tr>
 		<td><a href="{{ tcigt.test_case.get_absolute_url }}">{{ tcigt.test_case }}</a></td>
-		<td>{{ tcigt.status }}</td>
+		<td>
+			<div class="tcigt_status{{ tcigt.id }}">
+				{{ tcigt.status }}
+			</div>
+		</td>
 		<td>
 			{% if tcigt.tester %}
 				{{ tcigt.tester }}
@@ -31,13 +35,13 @@
 		        	</ul>
 	        	</div>
 	        	<div class="get_tcigt" id="{{ tcigt.id }}">
-	        		<a href="/tests/pick_up_case_in_gt/{{ tcigt.id }}/"> get </a>
+	        		get
 	        	</div>
 				<div class="bugreport_tcigt" id="{{ tcigt.id }}">
-					<a href="/tests/bug/add/{{ tcigt.test_case.id }}/{{ globaltesting.id }}/"> bugreport </a>
+					bugreport
 				</div>
 				<div class="pass_tcigt" id="{{ tcigt.id }}">
-					<a href="/tests/pass_case_in_gt/{{ tcigt.id }}/"> pass </a>
+					pass
 				</div>
 			</font>
 		</td>
