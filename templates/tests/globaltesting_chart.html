@@ -30,9 +30,15 @@
 	        			{% include "tests/_common/user_list_to_set_tcigt.html" with object_list=user_list %}
 		        	</ul>
 	        	</div>
-	        	<div class="get_tcigt" id="{{ tcigt.id }}">get</div>
-				<div class="bugreport_tcigt" id="{{ tcigt.id }}">bugreport</div>
-				<div class="pass_tcigt" id="{{ tcigt.id }}">pass</div>
+	        	<div class="get_tcigt" id="{{ tcigt.id }}">
+	        		<a href="/tests/pick_up_case_in_gt/{{ tcigt.id }}/"> get </a>
+	        	</div>
+				<div class="bugreport_tcigt" id="{{ tcigt.id }}">
+					<a href="#"> bugreport </a>
+				</div>
+				<div class="pass_tcigt" id="{{ tcigt.id }}">
+					<a href="/tests/pass_case_in_gt/{{ tcigt.id }}/"> pass </a>
+				</div>
 			</font>
 		</td>
 	</tr>
