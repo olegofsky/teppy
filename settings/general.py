@@ -1,3 +1,8 @@
+# -*- coding: utf-8 -*-
+import os
+
+PROJECT_ROOT = os.path.abspath(os.path.dirname(__name__))
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -30,8 +35,7 @@ STATIC_URL = '/static/'
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 STATICFILES_DIRS = (
-    '/static/',
-    '/home/dmitry/proj/teppy/static',
+    PROJECT_ROOT + '/static/',
 )
 
 STATICFILES_FINDERS = (
@@ -58,7 +62,7 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'urls'
 
 TEMPLATE_DIRS = (
-                 '/home/dmitry/proj/teppy/templates/',
+    PROJECT_ROOT + '/templates/',
 )
 
 INSTALLED_APPS = (
