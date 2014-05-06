@@ -3,3 +3,4 @@
 *.swp
 db
 /teppy_ve
+settings/local.py
