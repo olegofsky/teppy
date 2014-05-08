@@ -5,6 +5,8 @@ from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
+from source.tests.rest_api import router
+
 admin.autodiscover()
 
 urlpatterns = patterns('',
@@ -21,4 +23,7 @@ urlpatterns = patterns('',
     (r'^accounts/logout/$', logout, {'template_name': 'logout.html'}),
     (r'^accounts/password_change/$', 'django.contrib.auth.views.password_change'),
     (r'^accounts/password_change/done/$', 'django.contrib.auth.views.password_change_done'),
+
+    # url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^restful/', include(router.urls)),
 )

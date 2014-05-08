@@ -67,6 +67,7 @@ TEMPLATE_DIRS = (
 
 INSTALLED_APPS = (
     'south',
+    'rest_framework',
 
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -80,6 +81,11 @@ INSTALLED_APPS = (
     'source.employee',
     'utils',
 )
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
+    'PAGINATE_BY': 10,
+}
 
 LOGGING = {
     'version': 1,
